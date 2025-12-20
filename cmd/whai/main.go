@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	// "strings"
+)
 
 func main() {
-    fmt.Println("¡Hola, Mundo!")
+    args := os.Args[1:]
+    // Command interpreter
+
+    fmt.Println("Executed subcommands: ", args)
 }
