@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"whai/pkg/utils/ui"
 )
 
 type WhaiCommand Command
@@ -21,7 +22,7 @@ func (c WhaiCommand) AcceptsInput(input string) bool {
 	return input == ""
 }
 
-func (c WhaiCommand) Run(args []string) error {
+func (c WhaiCommand) Run(args []string, ui ui.UI) error {
 	fmt.Println("Whai Command")
 	return nil
 }

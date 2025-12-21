@@ -3,14 +3,14 @@ package commands
 import (
 	"errors"
 	"whai/pkg/utils"
+	"whai/pkg/utils/ui"
 )
 
 func Run(args []string) error {
 	input := utils.ParseArguments(args)
 	for _, command := range GetAvailableCommands() {
 		if command.AcceptsInput(input) {
-
-			return command.Run(args)
+			return command.Run(args, ui.NewUI())
 		}
 	}
 
