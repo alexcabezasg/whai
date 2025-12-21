@@ -6,9 +6,9 @@ import (
 	"whai/pkg/utils/ui"
 )
 
-func Run(args []string) error {
+func Run(args []string, commands []RunnableCommand) error {
 	input := utils.ParseArguments(args)
-	for _, command := range GetAvailableCommands() {
+	for _, command := range commands {
 		if command.AcceptsInput(input) {
 			return command.Run(args, ui.NewUI())
 		}
