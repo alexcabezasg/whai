@@ -3,12 +3,15 @@ package main
 import (
 	"fmt"
 	"os"
+	"whai/internal/commands"
 	// "strings"
 )
 
 func main() {
-    args := os.Args[1:]
-    // Command interpreter
-
-    fmt.Println("Executed subcommands: ", args)
+	args := os.Args[1:]
+	err := commands.Run(args)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
