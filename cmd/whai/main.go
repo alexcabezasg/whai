@@ -9,7 +9,7 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	err := commands.Run(args)
+	err := commands.Run(args, commands.GetAvailableCommands())
 	if err != nil {
 		fmt.Println(err)
 		return
