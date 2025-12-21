@@ -2,6 +2,7 @@ package commands
 
 import (
 	"errors"
+	"whai/internal/config"
 	"whai/pkg/utils"
 	"whai/pkg/utils/ui"
 )
@@ -10,7 +11,7 @@ func Run(args []string, commands []RunnableCommand) error {
 	input := utils.ParseArguments(args)
 	for _, command := range commands {
 		if command.AcceptsInput(input) {
-			return command.Run(args, ui.NewUI())
+			return command.Run(args, ui.NewUI(), config.NewProvider())
 		}
 	}
 

@@ -2,6 +2,7 @@ package commands
 
 import (
 	"strings"
+	"whai/internal/config"
 	"whai/pkg/utils/ui"
 )
 
@@ -22,7 +23,7 @@ func (c HelpCommand) AcceptsInput(input string) bool {
 	return Command(c).AcceptsInput(input)
 }
 
-func (c HelpCommand) Run(args []string, userInterface ui.UI) error {
+func (c HelpCommand) Run(_ []string, userInterface ui.UI, _ config.Provider) error {
 	userInterface.Println("Welcome to the help section of whai", ui.Format{Color: ui.Yellow, Bold: true})
 	userInterface.EmptyLine()
 	userInterface.Println("usage: whai [command]", ui.Format{Color: ui.Green, Bold: true})

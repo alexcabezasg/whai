@@ -2,15 +2,16 @@ package options
 
 import (
 	"errors"
+	"whai/internal/config"
 )
 
-func Run(args []string, opts []RunnableOption) error {
+func Run(args []string, opts []RunnableOption, provider config.Provider) error {
 	var errs []error
 	for _, arg := range args {
 		IsSupported := false
 		for _, opt := range opts {
 			if opt.AcceptsInput(arg) {
-				errs = append(errs, opt.Run(args))
+				errs = append(errs, opt.Run(args, provider))
 				IsSupported = true
 				continue
 			}

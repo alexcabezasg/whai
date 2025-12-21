@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"whai/internal/config"
 	"whai/internal/options"
 	"whai/pkg/utils/ui"
 )
@@ -34,12 +35,12 @@ func (c SetupCommand) AcceptsInput(input string) bool {
 	return Command(c).AcceptsInput(input)
 }
 
-func (c SetupCommand) Run(args []string, ui ui.UI) error {
+func (c SetupCommand) Run(args []string, ui ui.UI, provider config.Provider) error {
 	if len(args[1:]) == 0 {
 		return OpenSettings()
 	}
 
-	return options.Run(args[1:], c.Options)
+	return options.Run(args[1:], c.Options, provider)
 }
 
 func OpenSettings() error {
