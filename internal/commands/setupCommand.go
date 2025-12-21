@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"os"
+	"os/exec"
 	"whai/internal/config"
 	"whai/internal/options"
 	"whai/pkg/utils/logger"
@@ -45,5 +47,27 @@ func (c SetupCommand) Run(args []string, ui ui.UI, provider config.Provider) err
 }
 
 func OpenSettings() error {
+	configPath, err := config.ConfigPath()
+	if err != nil {
+		return err
+	}
+
+	cmd := exec.Command("nano", configPath)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
+
+	err = cmd.Start()
+	if err != nil {
+		return err
+	}
+
+	err = cmd.Wait()
+	if err != nil {
+		return err
+	}
+
+	logger.NewLogger().Info("Configuration successfully saved.")
+
 	return nil
 }
