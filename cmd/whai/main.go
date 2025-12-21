@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"whai/internal/commands"
+	// "strings"
+)
 
 func main() {
-    fmt.Println("¡Hola, Mundo!")
+	args := os.Args[1:]
+	err := commands.Run(args)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
