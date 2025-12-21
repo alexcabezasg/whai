@@ -1,6 +1,8 @@
 package commands
 
-import "whai/internal/options"
+import (
+	"whai/internal/options"
+)
 
 type Command struct {
 	Alias       string
@@ -11,6 +13,7 @@ type Command struct {
 type RunnableCommand interface {
 	Run(args []string) error
 	AcceptsInput(input string) bool
+	GetCommand() Command
 }
 
 func (c Command) AcceptsInput(input string) bool {

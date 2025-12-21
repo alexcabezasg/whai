@@ -7,7 +7,7 @@ type SetupCommand Command
 func (c SetupCommand) New() SetupCommand {
 	return SetupCommand{
 		Alias:       "setup",
-		Description: "Adjust the configuration of whai",
+		Description: "Adjust the configuration of whai. If no option provided, whai will open the configuration file.",
 		Options: []options.RunnableOption{
 			options.RunnableOption(options.EditConfigOption{
 				Flag:        "only-suggest",
@@ -21,6 +21,10 @@ func (c SetupCommand) New() SetupCommand {
 			}),
 		},
 	}
+}
+
+func (c SetupCommand) GetCommand() Command {
+	return Command(c)
 }
 
 func (c SetupCommand) AcceptsInput(input string) bool {

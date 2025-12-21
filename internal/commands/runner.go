@@ -9,6 +9,7 @@ func Run(args []string) error {
 	input := utils.ParseArguments(args)
 	for _, command := range GetAvailableCommands() {
 		if command.AcceptsInput(input) {
+
 			return command.Run(args)
 		}
 	}
