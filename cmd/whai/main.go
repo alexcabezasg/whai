@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"whai/internal/commands"
+	"whai/pkg/utils/logger"
 	// "strings"
 )
 
@@ -11,7 +11,7 @@ func main() {
 	args := os.Args[1:]
 	err := commands.Run(args, commands.GetAvailableCommands())
 	if err != nil {
-		fmt.Println(err)
+		logger.NewLogger().Error(err.Error())
 		return
 	}
 }
