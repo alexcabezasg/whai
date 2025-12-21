@@ -2,6 +2,7 @@ package commands
 
 import (
 	"whai/internal/options"
+	"whai/pkg/utils/ui"
 )
 
 type Command struct {
@@ -11,7 +12,7 @@ type Command struct {
 }
 
 type RunnableCommand interface {
-	Run(args []string) error
+	Run(args []string, ui ui.UI) error
 	AcceptsInput(input string) bool
 	GetCommand() Command
 }

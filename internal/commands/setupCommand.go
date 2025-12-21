@@ -1,6 +1,9 @@
 package commands
 
-import "whai/internal/options"
+import (
+	"whai/internal/options"
+	"whai/pkg/utils/ui"
+)
 
 type SetupCommand Command
 
@@ -31,7 +34,7 @@ func (c SetupCommand) AcceptsInput(input string) bool {
 	return Command(c).AcceptsInput(input)
 }
 
-func (c SetupCommand) Run(args []string) error {
+func (c SetupCommand) Run(args []string, ui ui.UI) error {
 	if len(args[1:]) == 0 {
 		return OpenSettings()
 	}
