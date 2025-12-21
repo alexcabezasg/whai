@@ -17,14 +17,14 @@ type RunnableOption interface {
 }
 
 func (opt Option) AcceptsInput(input string) bool {
-	parsedInput, err := utils.ParseArgument(input)
+	parsedOption, err := utils.ParseOption(input)
 	if err != nil {
 		return false
 	}
 
-	if !slices.Contains(opt.Values, parsedInput.Value) {
+	if !slices.Contains(opt.Values, parsedOption.Value) {
 		return false
 	}
 
-	return parsedInput.Key == opt.Flag
+	return parsedOption.Key == opt.Flag
 }

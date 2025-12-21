@@ -12,7 +12,7 @@ func (c EditConfigOption) AcceptsInput(input string) bool {
 }
 
 func (c EditConfigOption) Run(args []string) error {
-	argument, _ := utils.ParseArgument(args[0])
+	argument, _ := utils.ParseOption(args[0])
 	fmt.Println("setting ", argument.Key, " to ", argument.Value)
 
 	return nil

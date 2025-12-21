@@ -2,10 +2,11 @@ package commands
 
 import (
 	"errors"
+	"whai/pkg/utils"
 )
 
 func Run(args []string) error {
-	input := GetInputFromArgs(args)
+	input := utils.ParseArguments(args)
 	for _, command := range GetAvailableCommands() {
 		if command.AcceptsInput(input) {
 			return command.Run(args)
@@ -13,13 +14,6 @@ func Run(args []string) error {
 	}
 
 	return errors.New("Command " + input + " not found. Try 'whai help' for more information.")
-}
-
-func GetInputFromArgs(args []string) string {
-	if len(args) == 0 {
-		return ""
-	}
-	return args[0]
 }
 
 func GetAvailableCommands() []RunnableCommand {
