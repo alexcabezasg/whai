@@ -14,6 +14,7 @@ type Option struct {
 type RunnableOption interface {
 	Run(args []string) error
 	AcceptsInput(input string) bool
+	GetOption() Option
 }
 
 func (opt Option) AcceptsInput(input string) bool {

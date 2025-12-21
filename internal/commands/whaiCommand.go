@@ -13,6 +13,10 @@ func (c WhaiCommand) New() WhaiCommand {
 	}
 }
 
+func (c WhaiCommand) GetCommand() Command {
+	return Command(c)
+}
+
 func (c WhaiCommand) AcceptsInput(input string) bool {
 	return input == ""
 }

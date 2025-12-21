@@ -7,6 +7,10 @@ import (
 
 type EditConfigOption Option
 
+func (c EditConfigOption) GetOption() Option {
+	return Option(c)
+}
+
 func (c EditConfigOption) AcceptsInput(input string) bool {
 	return Option(c).AcceptsInput(input)
 }
