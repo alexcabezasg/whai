@@ -6,8 +6,7 @@ import (
 
 func Run(args []string) error {
 	input := GetInputFromArgs(args)
-	availableCommands := GetAvailableCommands()
-	for _, command := range availableCommands {
+	for _, command := range GetAvailableCommands() {
 		if command.AcceptsInput(input) {
 			return command.Run(args)
 		}

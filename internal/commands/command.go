@@ -1,9 +1,11 @@
 package commands
 
+import "whai/internal/options"
+
 type Command struct {
 	Alias       string
 	Description string
-	SubCommands []Command
+	Options     []options.RunnableOption
 }
 
 type RunnableCommand interface {
