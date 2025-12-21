@@ -1,10 +1,14 @@
 package options
 
-import "whai/pkg/utils"
+import (
+	"slices"
+	"whai/pkg/utils"
+)
 
 type Option struct {
 	Flag        string
 	Description string
+	Values      []string
 }
 
 type RunnableOption interface {
@@ -15,6 +19,10 @@ type RunnableOption interface {
 func (opt Option) AcceptsInput(input string) bool {
 	parsedInput, err := utils.ParseArgument(input)
 	if err != nil {
+		return false
+	}
+
+	if !slices.Contains(opt.Values, parsedInput.Value) {
 		return false
 	}
 

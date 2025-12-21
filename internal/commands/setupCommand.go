@@ -9,10 +9,16 @@ func (c SetupCommand) New() SetupCommand {
 		Alias:       "setup",
 		Description: "Adjust the configuration of whai",
 		Options: []options.RunnableOption{
-			options.RunnableOption(options.EditConfigOption{}.New(
-				"only-suggest",
-				"whai only prints the suggestion, not the reasoning. Default to false"),
-			),
+			options.RunnableOption(options.EditConfigOption{
+				Flag:        "only-suggest",
+				Description: "whai only prints the suggestion, not the reasoning. Default to false",
+				Values:      []string{"true", "false"},
+			}),
+			options.RunnableOption(options.EditConfigOption{
+				Flag:        "default-model",
+				Description: "Tells whai which model use on the next request.",
+				Values:      []string{"chat-gpt", "gemini", "i don't know"},
+			}),
 		},
 	}
 }

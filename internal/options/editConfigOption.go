@@ -7,13 +7,6 @@ import (
 
 type EditConfigOption Option
 
-func (c EditConfigOption) New(alias string, description string) EditConfigOption {
-	return EditConfigOption{
-		Flag:        alias,
-		Description: description,
-	}
-}
-
 func (c EditConfigOption) AcceptsInput(input string) bool {
 	return Option(c).AcceptsInput(input)
 }
