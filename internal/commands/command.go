@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"whai/internal/config"
 	"whai/internal/options"
 	"whai/pkg/utils/ui"
 )
@@ -12,7 +13,7 @@ type Command struct {
 }
 
 type RunnableCommand interface {
-	Run(args []string, ui ui.UI) error
+	Run(args []string, ui ui.UI, provider config.Provider) error
 	AcceptsInput(input string) bool
 	GetCommand() Command
 }

@@ -3,6 +3,7 @@ package commands
 import (
 	"errors"
 	"testing"
+	"whai/internal/config"
 	"whai/pkg/utils/ui"
 
 	"github.com/stretchr/testify/assert"
@@ -18,7 +19,7 @@ func (c DummyCommand) AcceptsInput(input string) bool {
 	return c.Alias == input
 }
 
-func (c DummyCommand) Run(args []string, ui ui.UI) error {
+func (c DummyCommand) Run(args []string, ui ui.UI, provider config.Provider) error {
 	return errors.New("command executed")
 }
 
