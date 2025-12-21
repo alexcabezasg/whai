@@ -1,8 +1,6 @@
 package options
 
 import (
-	"fmt"
-	"strconv"
 	"whai/internal/config"
 	"whai/pkg/utils"
 )
@@ -29,8 +27,6 @@ func (c EditConfigOption) Run(arg string, provider config.Provider) error {
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("DefaultModel: " + cfg.DefaultModel + ", OnlySuggest: " + strconv.FormatBool(cfg.OnlySuggest))
 
 	return provider.Set(cfg)
 }

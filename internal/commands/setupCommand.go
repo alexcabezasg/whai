@@ -3,6 +3,7 @@ package commands
 import (
 	"whai/internal/config"
 	"whai/internal/options"
+	"whai/pkg/utils/logger"
 	"whai/pkg/utils/ui"
 )
 
@@ -40,7 +41,7 @@ func (c SetupCommand) Run(args []string, ui ui.UI, provider config.Provider) err
 		return OpenSettings()
 	}
 
-	return options.Run(args[1:], c.Options, provider)
+	return options.Run(args[1:], c.Options, provider, logger.NewLogger())
 }
 
 func OpenSettings() error {
