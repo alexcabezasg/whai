@@ -24,7 +24,7 @@ func NewProvider() Provider {
 }
 
 func (provider DefaultProvider) Get() (error, Config) {
-	configPath, err := configPath()
+	configPath, err := ConfigPath()
 	if err != nil {
 		return err, Config{}
 	}
@@ -53,7 +53,7 @@ func (provider DefaultProvider) Get() (error, Config) {
 }
 
 func (provider DefaultProvider) Set(cfg Config) error {
-	configPath, err := configPath()
+	configPath, err := ConfigPath()
 	if err != nil {
 		return err
 	}
@@ -74,15 +74,15 @@ func (provider DefaultProvider) Set(cfg Config) error {
 	return nil
 }
 
-func closeFile(f io.Closer) {
-	if err := f.Close(); err != nil {
-	}
-}
-
-func configPath() (string, error) {
+func ConfigPath() (string, error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return "", err
 	}
 	return filepath.Join(homeDir, ".whai", "config.json"), nil
+}
+
+func closeFile(f io.Closer) {
+	if err := f.Close(); err != nil {
+	}
 }
