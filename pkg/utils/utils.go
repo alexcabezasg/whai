@@ -2,7 +2,11 @@ package utils
 
 import (
 	"errors"
+	"reflect"
 	"strings"
+	"whai/internal/config"
+
+	"github.com/iancoleman/strcase"
 )
 
 type Option struct {
@@ -35,4 +39,21 @@ func ParseArguments(args []string) string {
 		return ""
 	}
 	return args[0]
+}
+
+func SetFieldValue(cfg *config.Config, opt Option) error {
+	configKey := strcase.ToCamel(opt.Key)
+	field := reflect.ValueOf(cfg).Elem().FieldByName(configKey)
+
+	switch field.Kind() {
+	case reflect.Bool:
+		field.SetBool(opt.Value == "true")
+
+	case reflect.String:
+		field.SetString(opt.Value)
+	default:
+		return errors.New("unexpected error while inferring the configuration change")
+	}
+
+	return nil
 }

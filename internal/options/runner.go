@@ -11,7 +11,7 @@ func Run(args []string, opts []RunnableOption, provider config.Provider) error {
 		IsSupported := false
 		for _, opt := range opts {
 			if opt.AcceptsInput(arg) {
-				errs = append(errs, opt.Run(args, provider))
+				errs = append(errs, opt.Run(arg, provider))
 				IsSupported = true
 				continue
 			}

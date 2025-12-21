@@ -13,7 +13,7 @@ type Option struct {
 }
 
 type RunnableOption interface {
-	Run(args []string, provider config.Provider) error
+	Run(arg string, provider config.Provider) error
 	AcceptsInput(input string) bool
 	GetOption() Option
 }
