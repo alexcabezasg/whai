@@ -20,6 +20,20 @@ type ModelConfiguration struct {
 	ApiKey string `json:"api_key"`
 }
 
+func (cfg Config) NewConfig() Config {
+	return Config{
+		OnlySuggest: false,
+		DebugMode:   false,
+		Model:       "openai",
+		ModelsConfiguration: map[string]ModelConfiguration{
+			"openai": {
+				URL:    "",
+				ApiKey: "YOUR_API_KEY",
+			},
+		},
+	}
+}
+
 func (cfg Config) GetModelConfiguration(model string) (error, ModelConfiguration) {
 	modelConfig := cfg.ModelsConfiguration[model]
 	if modelConfig.URL == "" && modelConfig.ApiKey == "" {
@@ -83,6 +97,9 @@ func (commander DefaultCommander) Set(cfg Config) error {
 	}
 
 	file, err := os.OpenFile(configPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+	if err != nil {
+		return err
+	}
 	defer closeFile(file)
 
 	byteValue, err := json.MarshalIndent(cfg, "", "  ")
