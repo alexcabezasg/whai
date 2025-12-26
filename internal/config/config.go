@@ -10,21 +10,30 @@ import (
 type Config struct {
 	OnlySuggest  bool   `json:"only_suggest"`
 	DefaultModel string `json:"default_model"`
+	DebugMode    bool   `json:"debug_mode"`
 }
 
-type Provider interface {
+type Retriever interface {
 	Get() (error, Config)
+}
+
+type Commander interface {
 	Set(cfg Config) error
 }
 
-type DefaultProvider struct{}
+type DefaultRetriever struct{}
+type DefaultCommander struct{}
 
-func NewProvider() Provider {
-	return DefaultProvider{}
+func NewRetriever() Retriever {
+	return DefaultRetriever{}
 }
 
-func (provider DefaultProvider) Get() (error, Config) {
-	configPath, err := ConfigPath()
+func NewCommander() Commander {
+	return DefaultCommander{}
+}
+
+func (retriever DefaultRetriever) Get() (error, Config) {
+	configPath, err := Path()
 	if err != nil {
 		return err, Config{}
 	}
@@ -52,8 +61,8 @@ func (provider DefaultProvider) Get() (error, Config) {
 	return nil, config
 }
 
-func (provider DefaultProvider) Set(cfg Config) error {
-	configPath, err := ConfigPath()
+func (commander DefaultCommander) Set(cfg Config) error {
+	configPath, err := Path()
 	if err != nil {
 		return err
 	}
@@ -74,7 +83,7 @@ func (provider DefaultProvider) Set(cfg Config) error {
 	return nil
 }
 
-func ConfigPath() (string, error) {
+func Path() (string, error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return "", err

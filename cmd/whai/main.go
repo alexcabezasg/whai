@@ -3,15 +3,31 @@ package main
 import (
 	"os"
 	"whai/internal/commands"
+	"whai/internal/config"
+	"whai/pkg/context"
 	"whai/pkg/utils/logger"
-	// "strings"
+	"whai/pkg/utils/ui"
 )
 
 func main() {
 	args := os.Args[1:]
-	err := commands.Run(args, commands.GetAvailableCommands())
+	configRetriever := config.NewRetriever()
+
+	err, configuration := configRetriever.Get()
 	if err != nil {
-		logger.NewLogger().Error(err.Error())
+		panic(err)
+	}
+
+	ctx := context.Context{
+		Config:          configuration,
+		UI:              ui.NewUI(),
+		Logger:          logger.NewLogger(configuration),
+		ConfigCommander: config.NewCommander(),
+	}
+
+	err = commands.Run(args, commands.GetAvailableCommands(), ctx)
+	if err != nil {
+		ctx.Logger.Error(err.Error())
 		return
 	}
 }
