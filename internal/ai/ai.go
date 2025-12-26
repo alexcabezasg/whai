@@ -2,6 +2,7 @@ package ai
 
 import (
 	"whai/internal/config"
+	"whai/internal/shell"
 	"whai/pkg/utils/logger"
 )
 
@@ -12,7 +13,7 @@ type Result struct {
 }
 
 type ResponseProvider interface {
-	Get(configuration config.ModelConfiguration, logger logger.Logger) (error, Result)
+	Get(configuration config.ModelConfiguration, shellData shell.Data, logger logger.Logger) (error, Result)
 }
 
 func (r Result) String() string {

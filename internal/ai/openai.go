@@ -3,6 +3,7 @@ package ai
 import (
 	"context"
 	"encoding/json"
+	"whai/internal/shell"
 	"whai/pkg/utils/logger"
 
 	"github.com/openai/openai-go/v3"
@@ -14,13 +15,12 @@ import (
 
 type OpenAIResponseProvider struct{}
 
-func (OpenAIResponseProvider) Get(configuration config.ModelConfiguration, logger logger.Logger) (error, Result) {
+func (OpenAIResponseProvider) Get(configuration config.ModelConfiguration, shellData shell.Data, logger logger.Logger) (error, Result) {
 	client := openai.NewClient(
 		option.WithAPIKey(configuration.ApiKey),
 	)
 
-	// Just dummy data until I implement reading last failed command.
-	promptData := PromptData{Command: "git pus origin main", Error: "git: 'pus' is not a git command. See 'git --help'."}
+	promptData := PromptData{Command: shellData.FailedCommand, Error: shellData.Error}
 
 	logger.Debug("Loading openai.md prompt...")
 	prompt, err := LoadPrompt("openai", promptData)
