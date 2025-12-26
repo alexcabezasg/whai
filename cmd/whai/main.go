@@ -24,10 +24,10 @@ func main() {
 		UI:                 ui.NewUI(),
 		Logger:             logger.NewLogger(configuration),
 		ConfigCommander:    config.NewCommander(),
-		AIResponseProvider: ai.NewAIResponseProvider(),
+		AIResponseProvider: ai.NewAIResponseProvider(configuration),
 	}
 
-	err = commands.Run(args, commands.GetAvailableCommands(), ctx)
+	err = commands.Run(args, ctx)
 	if err != nil {
 		ctx.Logger.Error(err.Error())
 		return

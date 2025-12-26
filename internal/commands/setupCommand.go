@@ -24,7 +24,7 @@ func (c SetupCommand) New() SetupCommand {
 			options.RunnableOption(options.EditConfigOption{
 				Flag:        "model",
 				Description: "Tells whai which model use on the next request.",
-				Values:      []string{"chat-gpt", "gemini", "i don't know"},
+				Values:      []string{"openai"},
 			}),
 			options.RunnableOption(options.EditConfigOption{
 				Flag:        "debug-mode",

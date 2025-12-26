@@ -18,12 +18,11 @@ type Config struct {
 type ModelConfiguration struct {
 	URL    string `json:"url"`
 	ApiKey string `json:"api_key"`
-	Prompt string `json:"prompt"`
 }
 
 func (cfg Config) GetModelConfiguration(model string) (error, ModelConfiguration) {
 	modelConfig := cfg.ModelsConfiguration[model]
-	if modelConfig.URL == "" || modelConfig.ApiKey == "" {
+	if modelConfig.URL == "" && modelConfig.ApiKey == "" {
 		return errors.New("no model configuration found"), ModelConfiguration{}
 	}
 	return nil, modelConfig

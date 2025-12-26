@@ -2,6 +2,7 @@ package ai
 
 import (
 	"whai/internal/config"
+	"whai/pkg/utils/logger"
 )
 
 type Result struct {
@@ -11,21 +12,18 @@ type Result struct {
 }
 
 type ResponseProvider interface {
-	Get(configuration config.ModelConfiguration) (error, Result)
+	Get(configuration config.ModelConfiguration, logger logger.Logger) (error, Result)
 }
 
-type DefaultResponseProvider struct{}
-
-func NewAIResponseProvider() DefaultResponseProvider {
-	return DefaultResponseProvider{}
+func (r Result) String() string {
+	return "{ summary: " + r.Summary + ", root_cause: " + r.RootCause + ", suggestion: " + r.Suggestion + " }"
 }
 
-func (p DefaultResponseProvider) Get(configuration config.ModelConfiguration) (error, Result) {
-	// TODO Get the last failed command
-
-	return nil, Result{
-		Summary:    "Your last command failed due to this error: internal server error",
-		RootCause:  "It might be possible that the server is not up and running.",
-		Suggestion: "ping server.com to check the status of the server. If you don't get packets, contact support.",
+func NewAIResponseProvider(cfg config.Config) ResponseProvider {
+	switch cfg.Model {
+	case "openai":
+		return OpenAIResponseProvider{}
+	default:
+		panic("unsupported model: " + cfg.Model)
 	}
 }

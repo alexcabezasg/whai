@@ -1,12 +1,11 @@
 {
   "suggest-only": false,
-  "model": "chat-gpt",
+  "model": "openai",
   "debug_mode": false,
   "models_configuration": {
-    "chat-gpt": {
+    "openai": {
       "url": <URL>,
-      "api_key": <API_KEY>,
-      "prompt": "You are an API, fix this problem."
+      "api_key": <API_KEY>
     }
   }
 }
