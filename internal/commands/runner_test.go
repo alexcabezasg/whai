@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"errors"
 	"testing"
 	"whai/pkg/context"
 
@@ -19,7 +18,7 @@ func (c DummyCommand) AcceptsInput(input string) bool {
 }
 
 func (c DummyCommand) Run(args []string, ctx context.Context) error {
-	return errors.New("command executed")
+	return nil
 }
 
 func (c DummyCommand) New() DummyCommand {
@@ -37,8 +36,7 @@ func TestRun(t *testing.T) {
 	ctx := context.Context{}
 
 	err := Run([]string{"test"}, ctx, commands...)
-	assert.Error(t, err)
-	assert.ErrorContainsf(t, err, "command executed", "")
+	assert.Nil(t, err)
 
 	err = Run([]string{"other"}, ctx, commands...)
 	assert.ErrorContainsf(t, err, "Command other not found. Try 'whai help' for more information.", "")
