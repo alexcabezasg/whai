@@ -22,7 +22,7 @@ func (c SetupCommand) New() SetupCommand {
 				Values:      []string{"true", "false"},
 			}),
 			options.RunnableOption(options.EditConfigOption{
-				Flag:        "default-model",
+				Flag:        "model",
 				Description: "Tells whai which model use on the next request.",
 				Values:      []string{"chat-gpt", "gemini", "i don't know"},
 			}),

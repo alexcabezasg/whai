@@ -2,15 +2,31 @@ package config
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"os"
 	"path/filepath"
 )
 
 type Config struct {
-	OnlySuggest  bool   `json:"only_suggest"`
-	DefaultModel string `json:"default_model"`
-	DebugMode    bool   `json:"debug_mode"`
+	OnlySuggest         bool                          `json:"only_suggest"`
+	Model               string                        `json:"model"`
+	DebugMode           bool                          `json:"debug_mode"`
+	ModelsConfiguration map[string]ModelConfiguration `json:"models_configuration"`
+}
+
+type ModelConfiguration struct {
+	URL    string `json:"url"`
+	ApiKey string `json:"api_key"`
+	Prompt string `json:"prompt"`
+}
+
+func (cfg Config) GetModelConfiguration(model string) (error, ModelConfiguration) {
+	modelConfig := cfg.ModelsConfiguration[model]
+	if modelConfig.URL == "" || modelConfig.ApiKey == "" {
+		return errors.New("no model configuration found"), ModelConfiguration{}
+	}
+	return nil, modelConfig
 }
 
 type Retriever interface {

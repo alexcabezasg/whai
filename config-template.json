@@ -1,5 +1,12 @@
 {
   "suggest-only": false,
-  "default-model": "chat-gpt",
-  "debug-mode": false
+  "model": "chat-gpt",
+  "debug_mode": false,
+  "models_configuration": {
+    "chat-gpt": {
+      "url": <URL>,
+      "api_key": <API_KEY>,
+      "prompt": "You are an API, fix this problem."
+    }
+  }
 }
