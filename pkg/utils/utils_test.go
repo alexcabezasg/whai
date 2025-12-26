@@ -34,18 +34,18 @@ func TestParseOption(t *testing.T) {
 }
 
 func TestSetFieldValue(t *testing.T) {
-	cfg := config.Config{DefaultModel: "gemini", OnlySuggest: true}
+	cfg := config.Config{Model: "gemini", OnlySuggest: true}
 
 	err := SetFieldValue(&cfg, Option{Key: "only-suggest", Value: "false"})
 
 	assert.Nil(t, err)
-	assert.Equal(t, "gemini", cfg.DefaultModel)
+	assert.Equal(t, "gemini", cfg.Model)
 	assert.Equal(t, false, cfg.OnlySuggest)
 
-	err = SetFieldValue(&cfg, Option{Key: "default-model", Value: "chat-gpt"})
+	err = SetFieldValue(&cfg, Option{Key: "model", Value: "chat-gpt"})
 
 	assert.Nil(t, err)
-	assert.Equal(t, "chat-gpt", cfg.DefaultModel)
+	assert.Equal(t, "chat-gpt", cfg.Model)
 	assert.Equal(t, false, cfg.OnlySuggest)
 
 	err = SetFieldValue(&cfg, Option{Key: "key", Value: "value"})
