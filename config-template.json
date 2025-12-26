@@ -1,4 +1,5 @@
 {
   "suggest-only": false,
-  "default-model": "chat-gpt"
+  "default-model": "chat-gpt",
+  "debug-mode": false
 }

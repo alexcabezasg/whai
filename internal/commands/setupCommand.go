@@ -5,8 +5,8 @@ import (
 	"os/exec"
 	"whai/internal/config"
 	"whai/internal/options"
+	"whai/pkg/context"
 	"whai/pkg/utils/logger"
-	"whai/pkg/utils/ui"
 )
 
 type SetupCommand Command
@@ -26,6 +26,11 @@ func (c SetupCommand) New() SetupCommand {
 				Description: "Tells whai which model use on the next request.",
 				Values:      []string{"chat-gpt", "gemini", "i don't know"},
 			}),
+			options.RunnableOption(options.EditConfigOption{
+				Flag:        "debug-mode",
+				Description: "Enables the debug mode to see more traces.",
+				Values:      []string{"true", "false"},
+			}),
 		},
 	}
 }
@@ -38,16 +43,16 @@ func (c SetupCommand) AcceptsInput(input string) bool {
 	return Command(c).AcceptsInput(input)
 }
 
-func (c SetupCommand) Run(args []string, ui ui.UI, provider config.Provider) error {
+func (c SetupCommand) Run(args []string, ctx context.Context) error {
 	if len(args[1:]) == 0 {
-		return OpenSettings()
+		return OpenSettings(ctx.Logger)
 	}
 
-	return options.Run(args[1:], c.Options, provider, logger.NewLogger())
+	return options.Run(args[1:], c.Options, ctx)
 }
 
-func OpenSettings() error {
-	configPath, err := config.ConfigPath()
+func OpenSettings(logger logger.Logger) error {
+	configPath, err := config.Path()
 	if err != nil {
 		return err
 	}
@@ -67,7 +72,7 @@ func OpenSettings() error {
 		return err
 	}
 
-	logger.NewLogger().Info("Configuration successfully saved.")
+	logger.Info("Configuration successfully saved.")
 
 	return nil
 }

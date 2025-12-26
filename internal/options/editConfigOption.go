@@ -1,7 +1,7 @@
 package options
 
 import (
-	"whai/internal/config"
+	"whai/pkg/context"
 	"whai/pkg/utils"
 )
 
@@ -15,18 +15,13 @@ func (c EditConfigOption) AcceptsInput(input string) bool {
 	return Option(c).AcceptsInput(input)
 }
 
-func (c EditConfigOption) Run(arg string, provider config.Provider) error {
+func (c EditConfigOption) Run(arg string, ctx context.Context) error {
 	argument, _ := utils.ParseOption(arg)
 
-	err, cfg := provider.Get()
+	err := utils.SetFieldValue(&ctx.Config, argument)
 	if err != nil {
 		return err
 	}
 
-	err = utils.SetFieldValue(&cfg, argument)
-	if err != nil {
-		return err
-	}
-
-	return provider.Set(cfg)
+	return ctx.ConfigCommander.Set(ctx.Config)
 }

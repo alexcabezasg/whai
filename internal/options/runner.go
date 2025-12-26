@@ -2,21 +2,20 @@ package options
 
 import (
 	"errors"
-	"whai/internal/config"
-	"whai/pkg/utils/logger"
+	"whai/pkg/context"
 )
 
-func Run(args []string, opts []RunnableOption, provider config.Provider, log logger.Logger) error {
+func Run(args []string, opts []RunnableOption, ctx context.Context) error {
 	var errs []error
 	for _, arg := range args {
 		IsSupported := false
 		for _, opt := range opts {
 			if opt.AcceptsInput(arg) {
-				err := opt.Run(arg, provider)
+				err := opt.Run(arg, ctx)
 				if err != nil {
 					errs = append(errs, err)
 				} else {
-					log.Info("Option " + arg + " applied successfully.")
+					ctx.Logger.Debug("Option " + arg + " applied successfully.")
 					IsSupported = true
 					continue
 				}

@@ -2,7 +2,7 @@ package options
 
 import (
 	"slices"
-	"whai/internal/config"
+	"whai/pkg/context"
 	"whai/pkg/utils"
 )
 
@@ -13,7 +13,7 @@ type Option struct {
 }
 
 type RunnableOption interface {
-	Run(arg string, provider config.Provider) error
+	Run(arg string, ctx context.Context) error
 	AcceptsInput(input string) bool
 	GetOption() Option
 }
