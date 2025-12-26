@@ -3,8 +3,7 @@ package commands
 import (
 	"errors"
 	"testing"
-	"whai/internal/config"
-	"whai/pkg/utils/ui"
+	"whai/pkg/context"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -19,7 +18,7 @@ func (c DummyCommand) AcceptsInput(input string) bool {
 	return c.Alias == input
 }
 
-func (c DummyCommand) Run(args []string, ui ui.UI, provider config.Provider) error {
+func (c DummyCommand) Run(args []string, ctx context.Context) error {
 	return errors.New("command executed")
 }
 
@@ -35,10 +34,12 @@ func TestRun(t *testing.T) {
 		DummyCommand{}.New(),
 	}
 
-	err := Run([]string{"test"}, commands)
+	ctx := context.Context{}
+
+	err := Run([]string{"test"}, ctx, commands...)
 	assert.Error(t, err)
 	assert.ErrorContainsf(t, err, "command executed", "")
 
-	err = Run([]string{"other"}, commands)
+	err = Run([]string{"other"}, ctx, commands...)
 	assert.ErrorContainsf(t, err, "Command other not found. Try 'whai help' for more information.", "")
 }

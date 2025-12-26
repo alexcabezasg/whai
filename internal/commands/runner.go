@@ -6,8 +6,13 @@ import (
 	"whai/pkg/utils"
 )
 
-func Run(args []string, commands []RunnableCommand, ctx context.Context) error {
+func Run(args []string, ctx context.Context, commands ...RunnableCommand) error {
 	input := utils.ParseArguments(args)
+
+	if len(commands) == 0 {
+		commands = GetAvailableCommands()
+	}
+
 	for _, command := range commands {
 		if command.AcceptsInput(input) {
 			return command.Run(args, ctx)

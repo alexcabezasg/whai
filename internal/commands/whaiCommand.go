@@ -27,26 +27,30 @@ func (c WhaiCommand) Run(_ []string, ctx context.Context) error {
 		model := ctx.Config.Model
 		ctx.Logger.Debug("Model selected: " + model)
 		err, modelConfig := ctx.Config.GetModelConfiguration(model)
+
 		if err != nil {
 			ctx.Logger.Error("No model configuration found.")
 			return err
 		}
 		ctx.Logger.Debug("Model configuration: url => " + modelConfig.URL + ", api_key => " + modelConfig.ApiKey)
-		ctx.Logger.Debug("Model prompt: " + modelConfig.Prompt)
 
-		err, aiResponse := ctx.AIResponseProvider.Get(modelConfig)
+		err, aiResponse := ctx.AIResponseProvider.Get(modelConfig, ctx.Logger)
 		if err != nil {
 			ctx.Logger.Error("Error while getting ai response. " + err.Error())
 			return err
 		}
 
 		if ctx.Config.OnlySuggest {
+			ctx.Logger.Debug("Printing only the suggestion since --only-suggest is enabled")
 			ctx.UI.Println("Suggestion: "+aiResponse.Suggestion, ui.Format{Bold: true, Color: ui.Yellow})
 			return nil
 		}
 
+		ctx.UI.EmptyLine()
 		ctx.UI.Println("Summary: "+aiResponse.Summary, ui.Format{Color: ui.White})
+		ctx.UI.EmptyLine()
 		ctx.UI.Println("Root Cause: "+aiResponse.RootCause, ui.Format{Color: ui.Cyan})
+		ctx.UI.EmptyLine()
 		ctx.UI.Println("Suggestion: "+aiResponse.Suggestion, ui.Format{Bold: true, Color: ui.Yellow})
 
 		return nil
