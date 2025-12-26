@@ -34,7 +34,17 @@ func (c WhaiCommand) Run(_ []string, ctx context.Context) error {
 		}
 		ctx.Logger.Debug("Model configuration: url => " + modelConfig.URL + ", api_key => " + modelConfig.ApiKey)
 
-		err, aiResponse := ctx.AIResponseProvider.Get(modelConfig, ctx.Logger)
+		ctx.Logger.Debug("Loading last failed command...")
+		err, shellData := ctx.ShellProvider.Get()
+		if err != nil {
+			ctx.Logger.Debug("Shell provider error: " + err.Error())
+			return err
+		}
+
+		ctx.Logger.Debug("Loading last failed command success")
+		ctx.Logger.Debug(shellData.String())
+
+		err, aiResponse := ctx.AIResponseProvider.Get(modelConfig, shellData, ctx.Logger)
 		if err != nil {
 			ctx.Logger.Error("Error while getting ai response. " + err.Error())
 			return err

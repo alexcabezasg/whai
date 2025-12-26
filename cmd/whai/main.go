@@ -5,6 +5,7 @@ import (
 	"whai/internal/ai"
 	"whai/internal/commands"
 	"whai/internal/config"
+	"whai/internal/shell"
 	"whai/pkg/context"
 	"whai/pkg/utils/logger"
 	"whai/pkg/utils/ui"
@@ -38,6 +39,7 @@ func main() {
 		Logger:             log,
 		ConfigCommander:    configCommander,
 		AIResponseProvider: ai.NewAIResponseProvider(configuration),
+		ShellProvider:      shell.NewShellProvider(),
 	}
 
 	err = commands.Run(args, ctx)

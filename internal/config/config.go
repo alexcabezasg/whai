@@ -26,10 +26,7 @@ func (cfg Config) NewConfig() Config {
 		DebugMode:   false,
 		Model:       "openai",
 		ModelsConfiguration: map[string]ModelConfiguration{
-			"openai": {
-				URL:    "",
-				ApiKey: "YOUR_API_KEY",
-			},
+			"openai": {},
 		},
 	}
 }
