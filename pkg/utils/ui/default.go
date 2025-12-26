@@ -27,6 +27,16 @@ func (ui DefaultUI) EmptyLine() {
 	pterm.Println()
 }
 
+func (ui DefaultUI) RunWithSpinner(spinnerInfoMsg string, fn func() error) {
+	spinnerInfo, _ := pterm.DefaultSpinner.Start(spinnerInfoMsg)
+	err := fn()
+	if err != nil {
+		spinnerInfo.Fail("Error while running command. Please enable debug mode to see more.")
+	} else {
+		spinnerInfo.Success("Executed successfully.")
+	}
+}
+
 func getStyle(format Format) *pterm.Style {
 	color := getColor(format.Color)
 	if format.Bold {

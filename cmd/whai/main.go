@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"whai/internal/ai"
 	"whai/internal/commands"
 	"whai/internal/config"
 	"whai/pkg/context"
@@ -19,10 +20,11 @@ func main() {
 	}
 
 	ctx := context.Context{
-		Config:          configuration,
-		UI:              ui.NewUI(),
-		Logger:          logger.NewLogger(configuration),
-		ConfigCommander: config.NewCommander(),
+		Config:             configuration,
+		UI:                 ui.NewUI(),
+		Logger:             logger.NewLogger(configuration),
+		ConfigCommander:    config.NewCommander(),
+		AIResponseProvider: ai.NewAIResponseProvider(),
 	}
 
 	err = commands.Run(args, commands.GetAvailableCommands(), ctx)
